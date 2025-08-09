@@ -1,0 +1,383 @@
+<!-- Proudly made with GPT-5
+Prompt: Help me create a lorem dimsum website. So its a random text generator like lorem ipsum, but only have words and or sentences about foods. Should be vanilla html css js and easily deployable to github pages. Should be simple, have a large text box and a lot of paragraphs upon first load, and button above text box to copy, to regenerate, and to add/remove paragraph.
+-->
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Lorem Dimsum — food themed lorem ipsum</title>
+    <meta name="description" content="Random food-themed placeholder text generator (vanilla HTML/CSS/JS)." />
+    <style>
+        :root {
+            --bg: #0f1724;
+            /* deep navy */
+            --card: #0b1220;
+            --muted: #94a3b8;
+            --accent: #ffb86b;
+            /* warm food-y */
+            --glass: rgba(255, 255, 255, 0.03);
+            --radius: 14px;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            height: 100%
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(180deg, var(--bg), #061221 60%);
+            color: #e6eef8;
+            -webkit-font-smoothing: antialiased;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px;
+        }
+
+        .container {
+            width: min(1100px, 96%);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: 0 8px 30px rgba(2, 6, 23, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        header {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px
+        }
+
+        .title {
+            display: flex;
+            gap: 12px;
+            align-items: center
+        }
+
+        .logo {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #ffd29b, #ff8a5b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2b1410;
+            font-weight: 700;
+            font-size: 20px;
+            box-shadow: 0 6px 20px rgba(255, 138, 91, 0.12)
+        }
+
+        h1 {
+            font-size: 20px;
+            margin: 0
+        }
+
+        p.lead {
+            margin: 0;
+            color: var(--muted);
+            font-size: 13px
+        }
+
+        .controls {
+            display: flex;
+            gap: 8px;
+            align-items: center
+        }
+
+        button,
+        .btn {
+            background: var(--card);
+            color: inherit;
+            border: 0;
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .btn:hover {
+            transform: translateY(-2px)
+        }
+
+        .btn.secondary {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .btn.ghost {
+            background: transparent
+        }
+
+        .count {
+            display: flex;
+            align-items: center;
+            background: var(--glass);
+            border-radius: 10px;
+            padding: 6px 8px;
+            gap: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.02)
+        }
+
+        .count input {
+            width: 64px;
+            background: transparent;
+            border: 0;
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 16px;
+            text-align: center
+        }
+
+        main {
+            display: flex;
+            gap: 18px
+        }
+
+        .panel {
+            flex: 1
+        }
+
+        textarea#output {
+            width: 100%;
+            height: 460px;
+            border-radius: 12px;
+            padding: 18px;
+            font-size: 15px;
+            line-height: 1.7;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0.005));
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            color: var(--muted);
+            resize: vertical
+        }
+
+        .small {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 8px
+        }
+
+        footer {
+            margin-top: 14px;
+            color: var(--muted);
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        .chip {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-weight: 600
+        }
+
+        /* responsive */
+        @media (max-width:720px) {
+            main {
+                flex-direction: column
+            }
+
+            textarea#output {
+                height: 320px
+            }
+
+            .controls {
+                flex-wrap: wrap
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" role="main">
+        <header>
+            <div class="title">
+                <div class="logo">LD</div>
+                <div>
+                    <h1>Lorem Dimsum</h1>
+                    <p class="lead">Food-flavoured placeholder text — words, sentences, and paragraphs about food.</p>
+                </div>
+            </div>
+
+            <div class="controls" aria-hidden="false">
+                <div class="count" title="Number of paragraphs to generate">
+                    <label for="paragraphCount" style="font-size:12px;color:var(--muted);">Paragraphs</label>
+                    <input id="paragraphCount" type="number" min="1" max="50" value="8"
+                        aria-label="Number of paragraphs" />
+                </div>
+
+                <button class="btn" id="regenBtn" title="Regenerate text">🔁 Regenerate</button>
+                <button class="btn secondary" id="addBtn" title="Add one paragraph">＋ Add</button>
+                <button class="btn secondary" id="removeBtn" title="Remove one paragraph">－ Remove</button>
+                <button class="btn" id="copyBtn" title="Copy to clipboard">📋 Copy</button>
+            </div>
+        </header>
+
+        <main>
+            <div class="panel">
+                <textarea id="output" aria-label="Generated food placeholder text" readonly></textarea>
+                <div class="small">Tip: press <kbd>Ctrl/Cmd</kbd> + <kbd>C</kbd> after selecting text, or use the Copy
+                    button.</div>
+            </div>
+            <aside style="width:260px;min-width:200px">
+                <div class="card" style="background:transparent;padding:12px;border-radius:12px">
+                    <div class="chip">Word bank</div>
+                    <p class="small" style="margin-top:12px;line-height:1.6">This generator uses a curated food
+                        word-bank (ingredients, dishes, textures, cooking verbs and flavours). It produces short
+                        sentences and assembles them into paragraphs. You can tweak the number of paragraphs on top.</p>
+                    <details style="margin-top:12px;color:var(--muted)">
+                        <summary style="cursor:pointer">Preview of bank</summary>
+                        <div class="small" style="margin-top:8px;">
+                            <ul style="padding-left:16px;margin:0">
+                                <li>bao, dim sum, dumpling, siomay, shumai</li>
+                                <li>noodle, congee, porridge, broth, stock</li>
+                                <li>crispy, tender, glazed, caramelised, pickled</li>
+                                <li>spice, lemongrass, chilli oil, ginger, garlic</li>
+                                <li>street stall, wok, steam, bamboo basket, soy</li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+            </aside>
+        </main>
+
+        <footer>
+            <div>Made with ❤️ — simple, single-file, GitHub Pages ready</div>
+            <div class="small">v1 • <span id="paraCountDisplay">8</span> paragraphs</div>
+        </footer>
+    </div>
+
+    <script>
+        (() => {
+            const DEFAULT_PARAS = 8;
+
+            const WORD_BANK = {
+                nouns: ['bao', 'dim sum', 'dumpling', 'siomay', 'shumai', 'noodle', 'congee', 'porridge', 'broth', 'stock', 'roti', 'sambal', 'satay', 'skewer', 'bento', 'ramen', 'udon', 'miso', 'yakiniku', 'kimchi', 'curry', 'naan', 'taco', 'tamale', 'ceviche', 'pasta', 'risotto', 'paella', 'tapas', 'spring roll', 'sauce', 'soy', 'teriyaki', 'ginger', 'garlic', 'chilli oil', 'lemongrass', 'meatball', 'fish ball', 'prawn cracker', 'tofu', 'chicken wing', 'pork belly', 'beef brisket', 'squid', 'octopus', 'clams', 'mussels'],
+                verbs: ['steamed', 'fried', 'grilled', 'braised', 'roasted', 'caramelised', 'pickled', 'simmered', 'seared', 'glazed', 'stir-fried', 'sautéed', 'blanched', 'poached', 'marinated', 'smoked', 'baked', 'toasted', 'cooked', 'boiled', 'diced'],
+                adjectives: ['crispy', 'tender', 'silky', 'savory', 'umami-rich', 'zesty', 'fragrant', 'spicy', 'buttery', 'smoky'],
+                places: ['street stall', 'bamboo basket', 'wok', 'kitchen', 'market stall', 'food truck', 'hawker centre', 'restaurant', 'diner', 'food court', 'café', 'pub', 'bistro', 'tapas bar', 'ramen shop', 'noodle house'],
+                flavors: ['ginger', 'garlic', 'sesame', 'lime', 'coconut', 'peanut', 'chili', 'soy', 'fish sauce', 'hoisin']
+            };
+
+            const TEMPLATES = [
+                (w) => `${pick(w.adjectives)} ${pick(w.nouns)} ${pick(w.verbs)}`,
+                (w) => `${capitalize(pick(w.nouns))} with ${pick(w.flavors)} and ${pick(w.adjectives)} ${pick(w.nouns)}`,
+                (w) => `${pick(w.verbs)} in a ${pick(w.places)}`,
+                (w) => `${capitalize(pick(w.nouns))}, ${pick(w.verbs)} and ${pick(w.adjectives)}`,
+                (w) => `${pick(w.adjectives)} ${pick(w.nouns)} with ${pick(w.flavors)}`,
+                (w) => `${capitalize(pick(w.places))} favourite: ${pick(w.nouns)} and ${pick(w.nouns)}`
+            ];
+
+            function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+            function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+            function makeParagraph(wordBank) {
+                const sentenceCount = randInt(6, 14); // doubled length
+                const parts = [];
+                for (let i = 0; i < sentenceCount; i++) {
+                    const template = pick(TEMPLATES);
+                    let sentence = template(wordBank) + '.';
+                    sentence = capitalize(sentence.trim());
+                    parts.push(sentence);
+                }
+                return parts.join(' ');
+            }
+
+            function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min }
+
+            function generate(paragraphs = DEFAULT_PARAS) {
+                paragraphs = Math.max(1, Math.min(50, Math.round(paragraphs) || DEFAULT_PARAS));
+                const paras = [];
+                for (let i = 0; i < paragraphs; i++) paras.push(makeParagraph(WORD_BANK));
+                return paras.join('\n\n');
+            }
+
+            const outputEl = document.getElementById('output');
+            const regenBtn = document.getElementById('regenBtn');
+            const copyBtn = document.getElementById('copyBtn');
+            const addBtn = document.getElementById('addBtn');
+            const removeBtn = document.getElementById('removeBtn');
+            const paraCountInput = document.getElementById('paragraphCount');
+            const paraCountDisplay = document.getElementById('paraCountDisplay');
+
+            function refreshDisplayCount() { paraCountDisplay.textContent = paraCountInput.value }
+
+            function doGenerate() {
+                const n = Number(paraCountInput.value) || DEFAULT_PARAS;
+                outputEl.value = generate(n);
+                refreshDisplayCount();
+            }
+
+            async function doCopy() {
+                try {
+                    await navigator.clipboard.writeText(outputEl.value);
+                    showToast('Copied to clipboard');
+                } catch (e) {
+                    outputEl.select();
+                    const ok = document.execCommand('copy');
+                    outputEl.setSelectionRange(0, 0);
+                    if (ok) showToast('Copied to clipboard'); else showToast('Copy failed — select and press Ctrl/C');
+                }
+            }
+
+            let toastTimer = null;
+            function showToast(msg) {
+                if (document.getElementById('ltd-toast')) {
+                    const t = document.getElementById('ltd-toast'); t.textContent = msg; return;
+                }
+                const t = document.createElement('div'); t.id = 'ltd-toast';
+                t.textContent = msg;
+                Object.assign(t.style, { position: 'fixed', right: '18px', bottom: '18px', background: 'rgba(0,0,0,0.6)', padding: '10px 14px', borderRadius: '10px', color: '#fff', zIndex: 9999, fontWeight: 700, backdropFilter: 'blur(4px)' });
+                document.body.appendChild(t);
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(() => { t.remove(); }, 1600);
+            }
+
+            regenBtn.addEventListener('click', doGenerate);
+            copyBtn.addEventListener('click', doCopy);
+            addBtn.addEventListener('click', () => { paraCountInput.value = Math.min(50, Number(paraCountInput.value) + 1); doGenerate(); });
+            removeBtn.addEventListener('click', () => { paraCountInput.value = Math.max(1, Number(paraCountInput.value) - 1); doGenerate(); });
+
+            paraCountInput.addEventListener('change', () => { paraCountInput.value = Math.max(1, Math.min(50, Number(paraCountInput.value) || DEFAULT_PARAS)); doGenerate(); });
+            paraCountInput.addEventListener('input', refreshDisplayCount);
+
+            document.addEventListener('keydown', (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
+                    e.preventDefault(); doGenerate();
+                }
+                if ((e.ctrlKey || e.metaKey) && e.key === 'c') {
+                    const selection = window.getSelection().toString();
+                    if (!selection) { e.preventDefault(); doCopy(); }
+                }
+            });
+
+            document.addEventListener('DOMContentLoaded', () => {
+                paraCountInput.value = DEFAULT_PARAS;
+                refreshDisplayCount();
+                doGenerate();
+            });
+
+            window.loremDimsum = { generate };
+        })();
+    </script>
+
+</body>
+
+</html>
