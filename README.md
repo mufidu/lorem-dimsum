@@ -1,6 +1,6 @@
 # 🍜 Lorem Dimsum
 
-A fun, food-themed random text generator inspired by *lorem ipsum*, but instead of meaningless Latin, you get tasty, mouth-watering paragraphs about dim sum and other dishes.  
+A fun, food-themed random text generator inspired by *lorem ipsum*, but instead of meaningless Latin, you get tasty, mouth-watering paragraphs about dim sum and other dishes. Available as PWA!
 
 **[Live Demo](https://mufidu.github.io/lorem-dimsum)**
 
