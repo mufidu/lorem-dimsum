@@ -42,5 +42,10 @@ No frameworks, no build tools — just open and go.
 
 ---
 
+## 🤝 Contributing
+Contributions are welcome! Feel free to add more dishes, flavors, and places to the word bank.
+
+---
+
 ## 📜 License
 MIT License — feel free to fork, modify, and share.
