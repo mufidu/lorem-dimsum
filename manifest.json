@@ -1,6 +1,6 @@
 {
     "name": "Lorem Dimsum",
-    "short_name": "Dimsum",
+    "short_name": "Lorem Dimsum",
     "start_url": "./index.html",
     "display": "standalone",
     "background_color": "#ffffff",

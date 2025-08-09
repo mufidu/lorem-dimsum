@@ -193,16 +193,41 @@ Prompt: Help me create a lorem dimsum website. So its a random text generator li
 
         /* responsive */
         @media (max-width:720px) {
-            main {
-                flex-direction: column
+
+            body {
+                height: auto;
             }
 
-            textarea#output {
-                height: 320px
+            main {
+                flex-direction: column;
+            }
+
+            /* Stack controls under title */
+            header {
+                flex-direction: column;
+                align-items: flex-start;
             }
 
             .controls {
-                flex-wrap: wrap
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                width: 100%;
+                margin-top: 12px;
+            }
+
+            /* Keep logo perfectly square */
+            .logo {
+                width: 56px;
+                height: 56px;
+                flex-shrink: 0;
+            }
+
+            /* Make output taller so scrolling is needed */
+            textarea#output {
+                height: calc(100vh - 300px);
+                /* takes most of the screen */
+                min-height: 500px;
+                /* ensures large space */
             }
         }
     </style>
