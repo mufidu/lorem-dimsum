@@ -7,6 +7,9 @@ Prompt: Help me create a lorem dimsum website. So its a random text generator li
 
 <head>
     <meta charset="utf-8" />
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#0042AA">
+    <link rel="icon" href="./icons/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Lorem Dimsum — food themed lorem ipsum</title>
     <meta name="description" content="Random food-themed placeholder text generator (vanilla HTML/CSS/JS)." />
@@ -70,7 +73,7 @@ Prompt: Help me create a lorem dimsum website. So its a random text generator li
             width: 56px;
             height: 56px;
             border-radius: 12px;
-            background: linear-gradient(135deg, #ffd29b, #ff8a5b);
+            background: linear-gradient(135deg, #212573, #5b97ff);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -209,7 +212,7 @@ Prompt: Help me create a lorem dimsum website. So its a random text generator li
     <div class="container" role="main">
         <header>
             <div class="title">
-                <div class="logo">LD</div>
+                <div class="logo">🍜</div>
                 <div>
                     <h1>Lorem Dimsum</h1>
                     <p class="lead">Food-flavoured placeholder text — words, sentences, and paragraphs about food.</p>
@@ -376,6 +379,12 @@ Prompt: Help me create a lorem dimsum website. So its a random text generator li
 
             window.loremDimsum = { generate };
         })();
+
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("./service-worker.js")
+                .then(() => console.log("Service Worker registered"))
+                .catch((err) => console.error("SW registration failed:", err));
+        }
     </script>
 
 </body>
