@@ -18,7 +18,7 @@ A fun, food-themed random text generator inspired by *lorem ipsum*, but instead 
 ## 📦 Installation
 Clone this repository:
 ```bash
-git clone https://github.com/your-username/lorem-dimsum.git
+git clone https://github.com/mufidu/lorem-dimsum.git
 ```
 
 ---
